@@ -1,0 +1,21 @@
+# Glossary
+
+- **At-least-once delivery:** A message can be delivered more than once; consumers must tolerate duplicates.
+- **ADR:** Architecture Decision Record; a concise record of context, decision, and consequences.
+- **Backpressure:** A way to prevent producers from overwhelming consumers or downstream dependencies.
+- **Circuit breaker:** A mechanism that temporarily stops calls to a failing dependency to avoid cascading failures.
+- **Correlation ID:** An identifier used to associate related work. It is not a replacement for distributed tracing.
+- **Dead-letter queue (DLQ):** A destination for messages that cannot be processed under the configured policy.
+- **Distributed trace:** A linked set of spans describing work across components.
+- **Eventual consistency:** Different parts of a system may temporarily show different states but converge if processing succeeds.
+- **Idempotency:** Repeating an operation has no additional unintended effect.
+- **Liveness:** Whether a process is alive and should continue running.
+- **Readiness:** Whether a process is prepared to serve its intended workload.
+- **Outbox pattern:** Store a business change and the event to publish in one local database transaction, then publish asynchronously.
+- **OTLP:** OpenTelemetry Protocol used to transport telemetry.
+- **PromQL:** Prometheus query language.
+- **Span:** A timed unit of work within a trace.
+- **Telemetry cardinality:** The number of unique time series created by metric label combinations.
+- **Transactional boundary:** The scope within which a database can atomically commit or roll back changes.
+- **Poison message:** A message that repeatedly fails because of invalid data or a permanent processing issue.
+- **SLO:** Service Level Objective, a target for a measurable reliability indicator.
