@@ -24,24 +24,24 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-var summaries = new[]
-{
-    "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-};
 
-app.MapGet("/weatherforecast", () =>
-{
-    var forecast =  Enumerable.Range(1, 5).Select(index =>
-        new WeatherForecast
-        (
-            DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-            Random.Shared.Next(-20, 55),
-            summaries[Random.Shared.Next(summaries.Length)]
-        ))
-        .ToArray();
-    return forecast;
-})
-.WithName("GetWeatherForecast");
+app.MapPost("/api/documents",
+    async (
+        CreateDocumentCommand command,
+        ISender sender,
+        CancellationToken cancellationToken) =>
+    {
+        var documentId = await sender.Send(
+            command,
+            cancellationToken);
+
+        return Results.Created(
+            $"/api/documents/{documentId}",
+            new { Id = documentId });
+    })
+    .WithName("CreateDocument")
+    .WithTags("Documents")
+    .WithSummary("Create a new document");
 
 app.Run();
 
