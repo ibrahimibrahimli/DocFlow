@@ -1,6 +1,8 @@
-using MediatR;
 using DocFlow.DocumentService.Application.Documents.Create;
 using DocFlow.DocumentService.Infrastructure;
+using DocFlow.DocumentService.Infrastructure.Persistence;
+using MediatR;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,6 +16,10 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddInfrustructure(builder.Configuration);
 
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(CreateDocumentCommand).Assembly));
+
+builder.Services.AddDbContext<DocumentDbContext>(options =>
+    options.UseNpgsql(
+        builder.Configuration.GetConnectionString("DocumentDatabase")));
 
 var app = builder.Build();
 
