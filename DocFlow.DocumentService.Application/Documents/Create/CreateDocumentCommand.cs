@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using DocFlow.DocumentService.Application.Common.Results;
+using MediatR;
 
 namespace DocFlow.DocumentService.Application.Documents.Create
 {
@@ -6,5 +7,5 @@ namespace DocFlow.DocumentService.Application.Documents.Create
         string FileName,
         string ContentType,
         string ObjectKey
-        ) : IRequest<Guid>;
+        ) : IRequest<Result<Guid>>;
 }

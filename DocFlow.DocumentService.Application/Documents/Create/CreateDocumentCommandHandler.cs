@@ -1,12 +1,13 @@
 ﻿
 using DocFlow.DocumentService.Application.Abstractions.Persistence;
+using DocFlow.DocumentService.Application.Common.Results;
 using DocFlow.DocumentService.Domain.Documents;
 using MediatR;
 
 namespace DocFlow.DocumentService.Application.Documents.Create;
 
 public sealed class CreateDocumentCommandHandler
-    : IRequestHandler<CreateDocumentCommand, Guid>
+    : IRequestHandler<CreateDocumentCommand,Result<Guid>>
 {
     private readonly IDocumentRepository _documentRepository;
 
@@ -16,7 +17,7 @@ public sealed class CreateDocumentCommandHandler
         _documentRepository = documentRepository;
     }
 
-    public async Task<Guid> Handle(CreateDocumentCommand request, CancellationToken cancellationToken)
+    public async Task<Result<Guid>> Handle(CreateDocumentCommand request, CancellationToken cancellationToken)
     {
         var document = Document.Create(
             request.FileName,
@@ -27,6 +28,6 @@ public sealed class CreateDocumentCommandHandler
             document,
             cancellationToken);
 
-        return document.Id;
+        return Result<Guid>.Success(document.Id);
     }
 }
