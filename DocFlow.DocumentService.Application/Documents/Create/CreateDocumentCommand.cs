@@ -7,5 +7,5 @@ namespace DocFlow.DocumentService.Application.Documents.Create
         string FileName,
         string ContentType,
         string ObjectKey
-        ) : IRequest<Result<Guid>>;
+        ) : IRequest<Result<Guid>>x;
 }

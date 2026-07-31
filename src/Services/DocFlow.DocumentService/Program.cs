@@ -17,9 +17,7 @@ builder.Services.AddInfrustructure(builder.Configuration);
 
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(CreateDocumentCommand).Assembly));
 
-builder.Services.AddDbContext<DocumentDbContext>(options =>
-    options.UseNpgsql(
-        builder.Configuration.GetConnectionString("DocumentDatabase")));
+builder.Services.AddControllers();
 
 var app = builder.Build();
 
@@ -31,24 +29,6 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
-
-app.MapPost("/api/documents",
-    async (
-        CreateDocumentCommand command,
-        ISender sender,
-        CancellationToken cancellationToken) =>
-    {
-        var documentId = await sender.Send(
-            command,
-            cancellationToken);
-
-        return Results.Created(
-            $"/api/documents/{documentId}",
-            new { Id = documentId });
-    })
-    .WithName("CreateDocument")
-    .WithTags("Documents")
-    .WithSummary("Create a new document");
+app.MapControllers();
 
 app.Run();
